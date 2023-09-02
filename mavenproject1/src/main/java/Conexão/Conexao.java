@@ -12,9 +12,6 @@ import java.sql.*;
  */
 public class Conexao {
 
-    public static boolean statament(String pesquisa2) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     final private String driver = "com.mysql.jdbc.Driver";
     final private String url = "jdbc:mysql://localhost/clientes";
     final private String usuario = "root";

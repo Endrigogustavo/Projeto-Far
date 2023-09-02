@@ -53,35 +53,36 @@ public class Login extends JFrame {
 
         Logar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                    
                 try {
-                    String Date = con_cliente.resultset.getString("Especial");
-                   
-                  
-                    if (Date.equals("1")) {
-                            String pesquisa2 = "select * from tblusuario where usuario = 1'";
-                            con_cliente.execultarSQL(pesquisa2);
-                        if (con_cliente.resultset.first()) {
-                            MenuAdm mostrar = null;
-                            try {
-                                mostrar = new MenuAdm();
-                            } catch (ParseException ex) {
-                                Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                            }
-                            mostrar.setVisible(true);
 
-                            dispose();
-                        } else {
-                            MenuUser mostrar = new MenuUser();
-                            mostrar.setVisible(true);
+                    
+                    String pesquisa = "select * from tblusuario where usuario like '" +Nome.getText() + "' && senha = " +Senha.getText() + "";
+                    con_cliente.execultarSQL(pesquisa);
+                    
+ 
+                    if(con_cliente.resultset.first()){
+                    con_cliente.execultarSQL("select * from tblusuario where cod ?");
+                    String text = con_cliente.resultset.getString("cod");
+                    if(text.equals("1")){
+                    JOptionPane.showMessageDialog(null, "Adm");
+                    }else
+                     JOptionPane.showMessageDialog(null,"Usuario");
 
-                            dispose();
-                        }
+                    }else{     
+                        JOptionPane.showMessageDialog(null,"Errado");
 
                     }
-
+                    
+                    
+                    
+                    
                 } catch (SQLException erro) {
-                    JOptionPane.showMessageDialog(null, "Dados nao encontrados" + erro);
+                    JOptionPane.showMessageDialog(null, "Dados nao encontrados"+erro);
                 }
+
+            
+              
             }
         });
         tela.add(Nome);
