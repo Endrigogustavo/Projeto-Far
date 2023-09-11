@@ -5,7 +5,6 @@
 package Controle;
 
 import Conexão.Conexao;
-import java.sql.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,30 +54,48 @@ public class Login extends JFrame {
             public void actionPerformed(ActionEvent e) {
                     
                 try {
-
                     
                     String pesquisa = "select * from tblusuario where usuario like '" +Nome.getText() + "' && senha = " +Senha.getText() + "";
-                    con_cliente.execultarSQL(pesquisa);
+                    con_cliente.executaSQL(pesquisa);
                     
  
-                    if(con_cliente.resultset.first()){
-                    con_cliente.execultarSQL("select * from tblusuario where cod ?");
-                    String text = con_cliente.resultset.getString("cod");
-                    if(text.equals("1")){
-                    JOptionPane.showMessageDialog(null, "Adm");
-                    }else
-                     JOptionPane.showMessageDialog(null,"Usuario");
-
-                    }else{     
-                        JOptionPane.showMessageDialog(null,"Errado");
-
+                    try {
+                        if(con_cliente.resultset.first()){
+                            con_cliente.executaSQL("SELECT * FROM tblusuario WHERE cod like ");
+                            String text = con_cliente.resultset.getString("cod");
+                            if(text.equals("1")){
+                                MenuAdm Adm = new MenuAdm();
+                                Adm.setVisible(true);
+                                dispose();
+                            }
+                            
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                     
+                    try {
+                        if(con_cliente.resultset.first()){
+                            con_cliente.executaSQL("SELECT * FROM tblusuario WHERE cod=");
+                            String text = con_cliente.resultset.getString("cod");
+                            if(text.equals("0")){
+                                MenuUser User = new MenuUser();
+                                User.setVisible(true);
+                                dispose();
+                            }
+                            
+                        }
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                     
                     
                     
-                } catch (SQLException erro) {
-                    JOptionPane.showMessageDialog(null, "Dados nao encontrados"+erro);
+               
+                } catch (ParseException ex) {
+                    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
             

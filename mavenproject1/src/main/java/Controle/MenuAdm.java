@@ -154,10 +154,10 @@ public class MenuAdm extends JFrame {
                 String email = tEmail.getText();
                 try{
                  String insert_sql = "insert into tbclientes(nome,telefone,email,dt_nasc)values('"+nome+"','"+tel+"','"+email+"','"+dt+"')";
-                 con_cliente.statament.executeUpdate(insert_sql);
+                 con_cliente.statement.executeUpdate(insert_sql);
                  JOptionPane.showMessageDialog(null, "Gravado com sucesso");
                  
-                 con_cliente.execultarSQL("select * from tbclientes order by cod");
+                 con_cliente.executaSQL("select * from tbclientes order by cod");
                  preencherTabela();
                 }catch(SQLException erro){
                     JOptionPane.showMessageDialog(null,"Não foi possivel gravar registro"+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
@@ -185,9 +185,9 @@ public class MenuAdm extends JFrame {
                         msg="Alterado com sucesso";
                     }
                     
-                    con_cliente.statament.executeUpdate(sql);
+                    con_cliente.statement.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Gravado com sucesso");
-                    con_cliente.execultarSQL("select * from tbclientes order by cod");
+                    con_cliente.executaSQL("select * from tbclientes order by cod");
                     preencherTabela();
                     
                 } catch (SQLException errosql) {
@@ -205,10 +205,10 @@ public class MenuAdm extends JFrame {
                     int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja excluir?");
                     if (resposta==0) {
                       sql = "delete from tbclientes where cod = " +tCodigo.getText();
-                      int excluir = con_cliente.statament.executeUpdate(sql);                   
+                      int excluir = con_cliente.statement.executeUpdate(sql);                   
                     if(excluir==1){
                         JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-                        con_cliente.execultarSQL("select * from tbclientes order by cod");
+                        con_cliente.executaSQL("select * from tbclientes order by cod");
                         con_cliente.resultset.first();
                         preencherTabela();
                         //posicionarRegistro();
@@ -230,7 +230,7 @@ public class MenuAdm extends JFrame {
             public void actionPerformed(ActionEvent e){
                 try {
                     String pesquisa = "select * from tbclientes where nome like'"+tPesquisar.getText()+"%'";
-                    con_cliente.execultarSQL(pesquisa);
+                    con_cliente.executaSQL(pesquisa);
                     if(con_cliente.resultset.first()){
                     preencherTabela();
                     }
@@ -406,7 +406,7 @@ public class MenuAdm extends JFrame {
         setLocationRelativeTo(null);
 
         
-        con_cliente.execultarSQL("select * from tbclientes order by cod");
+        con_cliente.executaSQL("select * from tbclientes order by cod");
         preencherTabela();
 
  }
