@@ -21,6 +21,11 @@ SET time_zone = "+00:00";
 -- Banco de dados: `pharcom`
 --
 
+CREATE DATABASE `pharcom`;
+
+
+USE `pharcom`;
+
 -- --------------------------------------------------------
 
 --
@@ -30,7 +35,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `categoria` (
   `Id _Categoria` int(11) NOT NULL,
   `Descrição` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -46,7 +51,7 @@ CREATE TABLE `cliente` (
   `Senha` varchar(40) NOT NULL,
   `Email` varchar(200) NOT NULL,
   `CPF` varchar(16) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -57,7 +62,7 @@ CREATE TABLE `cliente` (
 CREATE TABLE `controle` (
   `ID_Func` int(11) NOT NULL,
   `ID_Remedio` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -85,7 +90,7 @@ CREATE TABLE `funcionário` (
 CREATE TABLE `nível-restrição` (
   `Nivel_ID` int(11) NOT NULL,
   `Descrição` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -113,7 +118,7 @@ CREATE TABLE `remedio` (
   `Preço` float NOT NULL,
   `Estoque` int(11) NOT NULL,
   `Descrição` varchar(80) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tabelas despejadas
