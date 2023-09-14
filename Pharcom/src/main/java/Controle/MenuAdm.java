@@ -20,7 +20,7 @@ import javax.swing.*;
 public class MenuAdm extends JFrame {
     Conexao con_cliente;
    
-    JButton sair,sair1;
+    JButton sair,sair1,sair2;
     public MenuAdm() throws SQLException, ParseException{
 
         Container tela = getContentPane();
@@ -34,6 +34,7 @@ public class MenuAdm extends JFrame {
         tela.setLayout(null);
         sair = new JButton ("Funcionarios");
         sair1 = new JButton ("Categorias");
+        sair2 = new JButton ("Cliente");
  
         sair.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -50,11 +51,11 @@ public class MenuAdm extends JFrame {
             }
         });
         
-                sair1.addActionListener(new ActionListener(){
+                sair2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
-                    Categoria Cat = new Categoria();
-                    Cat.setVisible(true);
+                    cliente cli = new cliente();
+                    cli.setVisible(true);
                     dispose();
                 } catch (SQLException ex) {
                     Logger.getLogger(MenuAdm.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,8 +70,11 @@ public class MenuAdm extends JFrame {
                 sair.setBounds(750, 335,150, 30);
                 tela.add(sair);
                 
-                sair1.setBounds(650, 335,150, 30);
+                sair1.setBounds(600, 335,150, 30);
                 tela.add(sair1);
+                
+                sair2.setBounds(450, 335,150, 30);
+                tela.add(sair2);
        
         setSize(1000,650);
         setVisible(true);

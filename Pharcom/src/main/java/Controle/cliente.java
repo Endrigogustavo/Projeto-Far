@@ -17,10 +17,10 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class Categoria extends JFrame {
+public class cliente extends JFrame {
     Conexao con_cliente;
-    JLabel rCodigo, rNome;
-    JTextField tCodigo, tNome;
+    JLabel rCodigo, rNome, rEmail, rTel, rData, rPesquisar, imagem;
+    JTextField tCodigo, tNome, tEmail, tTel, tData,tPesquisar, tEmail2, tEmail3, tEmail4;
     
     
     JTable tblClientes;
@@ -28,15 +28,25 @@ public class Categoria extends JFrame {
     
      
     
-    public Categoria() throws SQLException, ParseException{
+    public cliente() throws SQLException, ParseException{
 
         Container tela = getContentPane();
         
         rCodigo = new JLabel("Codigo");
         rNome = new JLabel("Nome");
+        rEmail = new JLabel("Email");
+        rTel = new JLabel("Telefone");
+        rData = new JLabel("Data");
+        rPesquisar = new JLabel("Pesquisar cliente");
         tCodigo = new JTextField();
         tNome = new JTextField();
-       
+        tEmail= new JTextField();
+        tTel = new JTextField();
+        tData= new JTextField();
+        tPesquisar= new JTextField();
+        tEmail2= new JTextField();
+        tEmail3= new JTextField();
+        tEmail4= new JTextField();
 
         
         con_cliente = new Conexao();
@@ -47,7 +57,11 @@ public class Categoria extends JFrame {
         tela.setLayout(null);
         
        
+                   
+        rPesquisar.setBounds(50, 320, 200, 50);
+        tPesquisar.setBounds(190, 335, 250, 20);
         
+
                 
         tblClientes = new javax.swing.JTable();
         scp_tabela = new javax.swing.JScrollPane();
@@ -68,15 +82,15 @@ public class Categoria extends JFrame {
         
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][]{
-            {null, null},
-            {null, null},
-            {null, null},
-            {null, null},
+            {null, null, null, null, null, null,null},
+            {null, null, null, null, null, null,null},
+            {null, null, null, null, null, null,null},
+            {null, null, null, null, null, null,null},
         },
-                new String [] {"Id _Categoria", "Descrição"})
+                new String [] {"Id _Cliente ", "Nome", "Data de Nascimento", "Usuário", "Senha", "Email", "CPF"})
         {
             boolean[] canEdit = new boolean[]{
-                false, false
+                false, false,false, false,false,false,false
             };
           
     public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -90,15 +104,19 @@ public class Categoria extends JFrame {
         setLocationRelativeTo(null);
 
         
-        con_cliente.executaSQL("select * from categoria order by Id _Categoria");
+        con_cliente.executaSQL("select * from cliente order by Id_Cliente");
         preencherTabela();
 
  }
       public void mostrar_Dados(){
         try{
-            tCodigo.setText(con_cliente.resultset.getString("Id _Categoria"));
-            tNome.setText(con_cliente.resultset.getString("Descrição"));
-            
+            tCodigo.setText(con_cliente.resultset.getString("Id _Cliente"));
+            tNome.setText(con_cliente.resultset.getString("Nome"));
+            tData.setText(con_cliente.resultset.getString("Data de Nascimento"));
+            tTel.setText(con_cliente.resultset.getString("Usuário"));
+            tEmail.setText(con_cliente.resultset.getString("Senha"));
+            tEmail2.setText(con_cliente.resultset.getString("Email"));
+            tEmail4.setText(con_cliente.resultset.getString("CPF"));
         }catch(SQLException erro){
              JOptionPane.showMessageDialog(null, "Não localizou dados: "+erro,"Mensagem do prograna", JOptionPane.INFORMATION_MESSAGE);
         }
@@ -107,7 +125,12 @@ public class Categoria extends JFrame {
     {
         tblClientes.getColumnModel().getColumn(0).setPreferredWidth(4);
         tblClientes.getColumnModel().getColumn(1).setPreferredWidth(150);
- 
+        tblClientes.getColumnModel().getColumn(2).setPreferredWidth(11);
+        tblClientes.getColumnModel().getColumn(3).setPreferredWidth(14);
+        tblClientes.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tblClientes.getColumnModel().getColumn(5).setPreferredWidth(14);
+        tblClientes.getColumnModel().getColumn(6).setPreferredWidth(100);
+       
         DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
         modelo.setNumRows(0);
         
@@ -115,8 +138,13 @@ public class Categoria extends JFrame {
             con_cliente.resultset.beforeFirst();
             while(con_cliente.resultset.next()){
                 modelo.addRow(new Object[]{
-                con_cliente.resultset.getString("Id _Categoria"),
-                con_cliente.resultset.getString("Descrição"), 
+                con_cliente.resultset.getString("Id _Cliente"),
+                con_cliente.resultset.getString("Nome"), 
+                con_cliente.resultset.getString("Data de Nascimento"), 
+                con_cliente.resultset.getString("Usuário"), 
+                con_cliente.resultset.getString("Senha"), 
+                con_cliente.resultset.getString("Email"), 
+                con_cliente.resultset.getString("CPF")
             });
             }
         }catch(SQLException erro){
