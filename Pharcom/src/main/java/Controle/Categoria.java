@@ -19,8 +19,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Categoria extends JFrame {
     Conexao con_cliente;
-    JLabel rCodigo, rNome;
-    JTextField tCodigo, tNome;
+    JLabel rCodigo, rNome,rCategoria,rPreco,rEstoque,rDescri;
+    JTextField tCodigo, tNome,tCategoria,tPreco,tEstoque, tDescri;
     
     
     JTable tblClientes;
@@ -68,15 +68,15 @@ public class Categoria extends JFrame {
         
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
         new Object [][]{
-            {null, null},
-            {null, null},
-            {null, null},
-            {null, null},
+            {null, null,null,null,null,null},
+            {null, null,null,null,null,null},
+            {null, null,null,null,null,null},
+            {null, null,null,null,null,null},
         },
-                new String [] {"Id _Categoria", "Descrição"})
+                new String [] {"Id_Rem", "Nome_Rem", "Categoria_Num", "Preço", "Estoque", "Descrição"})
         {
             boolean[] canEdit = new boolean[]{
-                false, false
+                false, false,false,false,false,false
             };
           
     public boolean isCellEditable(int rowIndex, int columnIndex){
@@ -90,14 +90,18 @@ public class Categoria extends JFrame {
         setLocationRelativeTo(null);
 
         
-        con_cliente.executaSQL("select * from categoria order by Id _Categoria");
+        con_cliente.executaSQL("select * from remedio order by Id_Rem");
         preencherTabela();
 
  }
       public void mostrar_Dados(){
         try{
-            tCodigo.setText(con_cliente.resultset.getString("Id _Categoria"));
-            tNome.setText(con_cliente.resultset.getString("Descrição"));
+            tCodigo.setText(con_cliente.resultset.getString("Id_Rem"));
+            tNome.setText(con_cliente.resultset.getString("Nome_Rem"));
+            tCategoria.setText(con_cliente.resultset.getString("Categoria_Num"));
+            tPreco.setText(con_cliente.resultset.getString("Preço"));
+            tEstoque.setText(con_cliente.resultset.getString("Estoque"));
+            tDescri.setText(con_cliente.resultset.getString("Descrição"));
             
         }catch(SQLException erro){
              JOptionPane.showMessageDialog(null, "Não localizou dados: "+erro,"Mensagem do prograna", JOptionPane.INFORMATION_MESSAGE);
@@ -107,6 +111,10 @@ public class Categoria extends JFrame {
     {
         tblClientes.getColumnModel().getColumn(0).setPreferredWidth(4);
         tblClientes.getColumnModel().getColumn(1).setPreferredWidth(150);
+        tblClientes.getColumnModel().getColumn(2).setPreferredWidth(4);
+        tblClientes.getColumnModel().getColumn(3).setPreferredWidth(150);
+        tblClientes.getColumnModel().getColumn(4).setPreferredWidth(4);
+        tblClientes.getColumnModel().getColumn(5).setPreferredWidth(150);
  
         DefaultTableModel modelo = (DefaultTableModel) tblClientes.getModel();
         modelo.setNumRows(0);
@@ -115,7 +123,11 @@ public class Categoria extends JFrame {
             con_cliente.resultset.beforeFirst();
             while(con_cliente.resultset.next()){
                 modelo.addRow(new Object[]{
-                con_cliente.resultset.getString("Id _Categoria"),
+                con_cliente.resultset.getString("Id_Rem"),
+                con_cliente.resultset.getString("Nome_Rem"), 
+                con_cliente.resultset.getString("Categoria_Num"),
+                con_cliente.resultset.getString("Preço"), 
+                con_cliente.resultset.getString("Estoque"),
                 con_cliente.resultset.getString("Descrição"), 
             });
             }

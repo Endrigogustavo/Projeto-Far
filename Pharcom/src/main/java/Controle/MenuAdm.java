@@ -51,6 +51,22 @@ public class MenuAdm extends JFrame {
             }
         });
         
+        sair1.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try {
+                    Categoria fun = new Categoria();
+                    fun.setVisible(true);
+                    dispose();
+                } catch (SQLException ex) {
+                    Logger.getLogger(MenuAdm.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (ParseException ex) {
+                    Logger.getLogger(MenuAdm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+        });
+        
+        
                 sair2.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {

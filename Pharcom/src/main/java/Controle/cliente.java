@@ -104,7 +104,7 @@ public class cliente extends JFrame {
         setLocationRelativeTo(null);
 
         
-        con_cliente.executaSQL("select * from cliente order by Id_Cliente");
+        con_cliente.executaSQL("select * from cliente order by Id _Cliente");
         preencherTabela();
 
  }
