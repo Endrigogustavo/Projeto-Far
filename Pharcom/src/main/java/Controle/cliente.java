@@ -87,7 +87,7 @@ public class cliente extends JFrame {
             {null, null, null, null, null, null,null},
             {null, null, null, null, null, null,null},
         },
-                new String [] {"Id _Cliente ", "Nome", "Data de Nascimento", "Usuário", "Senha", "Email", "CPF"})
+                new String [] {"Id_Cliente ", "Nome", "DataNasc", "Usuário", "Senha", "Email", "CPF"})
         {
             boolean[] canEdit = new boolean[]{
                 false, false,false, false,false,false,false
@@ -104,15 +104,15 @@ public class cliente extends JFrame {
         setLocationRelativeTo(null);
 
         
-        con_cliente.executaSQL("select * from cliente order by Id _Cliente");
+        con_cliente.executaSQL("select * from cliente order by Id_Cliente");
         preencherTabela();
 
  }
       public void mostrar_Dados(){
         try{
-            tCodigo.setText(con_cliente.resultset.getString("Id _Cliente"));
+            tCodigo.setText(con_cliente.resultset.getString("Id_Cliente"));
             tNome.setText(con_cliente.resultset.getString("Nome"));
-            tData.setText(con_cliente.resultset.getString("Data de Nascimento"));
+            tData.setText(con_cliente.resultset.getString("DataNasc"));
             tTel.setText(con_cliente.resultset.getString("Usuário"));
             tEmail.setText(con_cliente.resultset.getString("Senha"));
             tEmail2.setText(con_cliente.resultset.getString("Email"));
@@ -138,9 +138,9 @@ public class cliente extends JFrame {
             con_cliente.resultset.beforeFirst();
             while(con_cliente.resultset.next()){
                 modelo.addRow(new Object[]{
-                con_cliente.resultset.getString("Id _Cliente"),
+                con_cliente.resultset.getString("Id_Cliente"),
                 con_cliente.resultset.getString("Nome"), 
-                con_cliente.resultset.getString("Data de Nascimento"), 
+                con_cliente.resultset.getString("DataNasc"), 
                 con_cliente.resultset.getString("Usuário"), 
                 con_cliente.resultset.getString("Senha"), 
                 con_cliente.resultset.getString("Email"), 

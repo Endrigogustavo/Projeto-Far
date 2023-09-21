@@ -6,6 +6,8 @@ package Controle;
 
 import Conexão.Conexao;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.*;
 import java.text.*;
 import javax.swing.*;
@@ -19,9 +21,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Categoria extends JFrame {
     Conexao con_cliente;
-    JLabel rCodigo, rNome,rCategoria,rPreco,rEstoque,rDescri;
-    JTextField tCodigo, tNome,tCategoria,tPreco,tEstoque, tDescri;
-    
+    JLabel rCodigo, rNome,rCategoria,rPreco,rEstoque,rPesquisar;
+    JTextField tCodigo, tNome,tCategoria,tPreco,tEstoque, tPesquisar,tDes;
+    JButton primeiro, anterior, proximo, ultimo, registro, gravar, alterar, excluir,pesquisar,sair;
     
     JTable tblClientes;
     JScrollPane scp_tabela;
@@ -33,10 +35,20 @@ public class Categoria extends JFrame {
         Container tela = getContentPane();
         
         rCodigo = new JLabel("Codigo");
-        rNome = new JLabel("Nome");
+        rNome = new JLabel("Remedio");
+        rCategoria = new JLabel("Categoria");
+        rPreco = new JLabel("Preço");
+        rEstoque = new JLabel("Estoque");
+        rPesquisar = new JLabel("Descrição");
         tCodigo = new JTextField();
         tNome = new JTextField();
-       
+        tCategoria= new JTextField();
+        tPreco = new JTextField();
+        tEstoque= new JTextField();
+        tPesquisar= new JTextField();
+        tDes= new JTextField();
+
+
 
         
         con_cliente = new Conexao();
@@ -46,9 +58,220 @@ public class Categoria extends JFrame {
         setResizable(false);
         tela.setLayout(null);
         
-       
+        primeiro = new JButton ("Primeiro");
+        anterior = new JButton ("Anterior");
+        proximo = new JButton ("Próximo");
+        ultimo = new JButton ("Último");
         
+        registro = new JButton ("Nova Registro");
+        gravar = new JButton ("Gravar");
+        alterar = new JButton ("Alterar");
+        excluir = new JButton ("Excluir");
+        pesquisar = new JButton ("Pesquisar");
+        sair = new JButton ("Sair");
+        
+         sair.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                System.exit(0);
+            }
+        });
+         
+        primeiro.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try{
+                    con_cliente.resultset.first();
+                    mostrar_Dados();
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null,"Não foi possivel acessar o primeiro registro"+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        anterior.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try{
+                    if(con_cliente.resultset.isFirst()){
+                    JOptionPane.showMessageDialog(null, "Ja esta no primeiro registro");
+                    }else{
+                    con_cliente.resultset.previous();
+                    mostrar_Dados();
+                    }
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null,"Não foi possivel acessar o primeiro registro"+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        
+        
+        proximo.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try{
+                     if(con_cliente.resultset.isLast()){
+                    JOptionPane.showMessageDialog(null, "Ja esta no ultimo registro");
+                    }else{
+                    con_cliente.resultset.next();
+                    mostrar_Dados();
+                    }
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null,"Não foi possivel acessar o primeiro registro"+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        ultimo.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try{
+                    con_cliente.resultset.last();
+                    mostrar_Dados();
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null,"Não foi possivel acessar o primeiro registro"+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        
+        registro.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                tCodigo.setText("");
+                tEstoque.setText("");
+                tCategoria.setText("");
+                tNome.setText("");
+                tPreco.setText("");
+            }
+        });
+        
+        gravar.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String nome = tNome.getText();
+                String dt = tEstoque.getText();
+                String tel = tPreco.getText();
+                String email = tCategoria.getText();
+                String des = tDes.getText();
+                try{
+                 String insert_sql = "insert into remedio(Nome_Rem,Categoria_Num,Preço,Estoque,Descrição)values('"+nome+"','"+tel+"','"+email+"','"+dt+"','"+des+"')";
+                 con_cliente.statement.executeUpdate(insert_sql);
+                 JOptionPane.showMessageDialog(null, "Gravado com sucesso");
+                 
+                 con_cliente.executaSQL("select * from remedio order by Id_Rem");
+                 preencherTabela();
+                }catch(SQLException erro){
+                    JOptionPane.showMessageDialog(null,"Não foi possivel gravar registro"+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        });
+        
+        alterar.addActionListener(new ActionListener(){           
+            public void actionPerformed(ActionEvent e){
+                String nome = tNome.getText();
+                String dt = tEstoque.getText();
+                String tel = tPreco.getText();
+                String email = tCategoria.getText();
+                String des = tDes.getText();
+                String sql;
+                String msg="";
+               
+                try {
+                    if (tCodigo.getText().equals("")) {
+                       sql = "insert into remedio(Nome_Rem,Categoria_Num,Preço,Estoque,Descrição)values('"+nome+"','"+tel+"','"+email+"','"+dt+"','"+des+"')";
+                       msg="Gravado com sucesso";
+                    }
+                    else{
+                        sql = "update remedio set Nome_Rem='"+nome+"',Categoria_Num='"+email+"',Preço='"+tel+"',Estoque='"+dt+"',Descrição='"+des+"'where cod="+tCodigo.getText();
+                        msg="Alterado com sucesso";
+                    }
+                    
+                    con_cliente.statement.executeUpdate(sql);
+                    JOptionPane.showMessageDialog(null, "Gravado com sucesso");
+                    con_cliente.executaSQL("select * from remedio order by Nome_Rem");
+                    preencherTabela();
+                    
+                } catch (SQLException errosql) {
+                    JOptionPane.showMessageDialog(null, "Erro ao atualizar");
+                }
+            }
+        });
+        
+       
+         excluir.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                String sql;
                 
+                try {
+                    int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja excluir?");
+                    if (resposta==0) {
+                      sql = "delete from tbclientes where cod = " +tCodigo.getText();
+                      int excluir = con_cliente.statement.executeUpdate(sql);                   
+                    if(excluir==1){
+                        JOptionPane.showMessageDialog(null, "Excluido com sucesso");
+                        con_cliente.executaSQL("select * from tbclientes order by cod");
+                        con_cliente.resultset.first();
+                        preencherTabela();
+                        //posicionarRegistro();
+                    }
+                    else{
+                    JOptionPane.showMessageDialog(null, "Operaçao cancelada pelo usuario");
+                    }
+                }
+                    
+
+             
+                } catch (SQLException errosql) {
+                    JOptionPane.showMessageDialog(null, "Erro ao deletar");
+                }
+            }
+        });
+         
+           pesquisar.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e){
+                try {
+                    String pesquisa = "select * from tbclientes where nome like'"+tPesquisar.getText()+"%'";
+                    con_cliente.executaSQL(pesquisa);
+                    if(con_cliente.resultset.first()){
+                    preencherTabela();
+                    }
+                    else{
+                    JOptionPane.showMessageDialog(null, "\n Nao existe");
+                    }
+                } catch (SQLException errosql) {
+                    JOptionPane.showMessageDialog(null, "\n Dados nao encontrados");
+                }
+            }
+        });
+                
+     
+                primeiro.setBounds(60, 260,100, 30);
+                tela.add(primeiro);
+                anterior.setBounds(150, 260,100, 30);
+                tela.add(anterior);
+                proximo.setBounds(240, 260,100, 30);
+                tela.add(proximo);
+                ultimo.setBounds(330, 260,100, 30);
+                tela.add(ultimo);
+                
+                
+                registro.setBounds(500, 260,130, 30);
+                tela.add(registro);
+                gravar.setBounds(635, 260,100, 30);
+                tela.add(gravar);
+                alterar.setBounds(730, 260,100, 30);
+                tela.add(alterar);
+                excluir.setBounds(830, 260,100, 30);
+                tela.add(excluir);
+                
+                pesquisar.setBounds(450, 335,150, 22);
+                tela.add(pesquisar);
+                
+                sair.setBounds(750, 335,150, 30);
+                tela.add(sair);
+                
+               
+        rPesquisar.setBounds(50, 320, 200, 50);
+        tPesquisar.setBounds(190, 335, 250, 20);
+        
+
+                
+        
         tblClientes = new javax.swing.JTable();
         scp_tabela = new javax.swing.JScrollPane();
 
@@ -58,6 +281,7 @@ public class Categoria extends JFrame {
 
         
         tela.add(tblClientes);
+
         tela.add(scp_tabela);
 
         
@@ -85,6 +309,50 @@ public class Categoria extends JFrame {
         scp_tabela.setViewportView(tblClientes); 
         tblClientes.setAutoCreateRowSorter(true);
 
+       
+        rCodigo.setBounds(50, 40, 150, 50);
+        rNome.setBounds(50, 80, 150, 50);
+        rCategoria.setBounds(50, 120, 150, 50);
+        rPreco.setBounds(50, 160, 150, 50);
+        rEstoque.setBounds(50, 200, 150, 50);
+        
+        rCodigo.setForeground(Color.white);
+        rNome.setForeground(Color.white);
+        rCategoria.setForeground(Color.white);
+        rPreco.setForeground(Color.white);
+        rEstoque.setForeground(Color.white);
+        rPesquisar.setForeground(Color.white);
+        
+        rCodigo.setFont(new Font("Tahoma",Font.BOLD,15));
+        rNome.setFont(new Font("Tahoma",Font.BOLD,15));
+        rCategoria.setFont(new Font("Tahoma",Font.BOLD,15));
+        rPreco.setFont(new Font("Tahoma",Font.BOLD,15));
+        rEstoque.setFont(new Font("Tahoma",Font.BOLD,15));
+        rPesquisar.setFont(new Font("Tahoma",Font.BOLD,15));
+        
+        
+        tCodigo.setBounds(130, 50, 80, 30);
+        tNome.setBounds(130, 90, 220, 30);
+        tCategoria.setBounds(130, 130, 220, 30);
+        tPreco.setBounds(130, 170, 220, 30);
+        tEstoque.setBounds(130, 210, 220, 30);
+        tPesquisar.setBounds(130, 135, 220, 30);
+        tDes.setBounds(130, 235, 220, 30);
+        
+        
+        tela.add(tCategoria);
+        tela.add(tCodigo);
+        tela.add(tNome);
+        tela.add(tPreco);
+        tela.add(tEstoque);
+        tela.add(rCodigo);
+        tela.add(rNome);
+        tela.add(rCategoria);
+        tela.add(rPreco);
+        tela.add(rEstoque);
+        tela.add(tDes);
+        
+                
         setSize(1000,650);
         setVisible(true);
         setLocationRelativeTo(null);
@@ -101,7 +369,7 @@ public class Categoria extends JFrame {
             tCategoria.setText(con_cliente.resultset.getString("Categoria_Num"));
             tPreco.setText(con_cliente.resultset.getString("Preço"));
             tEstoque.setText(con_cliente.resultset.getString("Estoque"));
-            tDescri.setText(con_cliente.resultset.getString("Descrição"));
+            tDes.setText(con_cliente.resultset.getString("Descrição"));
             
         }catch(SQLException erro){
              JOptionPane.showMessageDialog(null, "Não localizou dados: "+erro,"Mensagem do prograna", JOptionPane.INFORMATION_MESSAGE);
@@ -134,6 +402,8 @@ public class Categoria extends JFrame {
         }catch(SQLException erro){
     JOptionPane.showMessageDialog(null,"erro ao listar dados da tabela!! \n "+erro,"Mensagem do programa", JOptionPane.INFORMATION_MESSAGE);
 }
+        
+
     }
     
 public static void main(String args[]) throws SQLException, ParseException{

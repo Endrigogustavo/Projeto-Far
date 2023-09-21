@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 11-Set-2023 às 19:34
+-- Tempo de geração: 21-Set-2023 às 18:37
 -- Versão do servidor: 10.4.22-MariaDB
 -- versão do PHP: 8.0.13
 
@@ -20,11 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `pharcom`
 --
-
-CREATE DATABASE `pharcom`;
-
-
-USE `pharcom`;
 
 -- --------------------------------------------------------
 
@@ -44,14 +39,21 @@ CREATE TABLE `categoria` (
 --
 
 CREATE TABLE `cliente` (
-  `Id _Cliente` int(11) NOT NULL,
+  `Id_Cliente` int(11) NOT NULL,
   `Nome` varchar(200) NOT NULL,
-  `Data de Nascimento` date NOT NULL,
+  `DataNasc` date NOT NULL,
   `Usuário` varchar(300) NOT NULL,
   `Senha` varchar(40) NOT NULL,
   `Email` varchar(200) NOT NULL,
   `CPF` varchar(16) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `cliente`
+--
+
+INSERT INTO `cliente` (`Id_Cliente`, `Nome`, `DataNasc`, `Usuário`, `Senha`, `Email`, `CPF`) VALUES
+(1, 'Alex', '2023-09-04', 'Alex', '123', 'AlexDaDizessete@gmail.com', 'ervqer');
 
 -- --------------------------------------------------------
 
@@ -80,6 +82,13 @@ CREATE TABLE `funcionário` (
   `Data_Nasc` date NOT NULL,
   `CPF` varchar(14) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `funcionário`
+--
+
+INSERT INTO `funcionário` (`ID_Func`, `Nome_Func`, `Usuário`, `Nivel_ID`, `Senha`, `Email`, `Data_Nasc`, `CPF`) VALUES
+(1, 'Alex', 'Alex', 1, '123', 'AlexOPicaDasGalaxias@gmail', '2023-09-11', '12341234213');
 
 -- --------------------------------------------------------
 
@@ -121,6 +130,13 @@ CREATE TABLE `remedio` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 --
+-- Extraindo dados da tabela `remedio`
+--
+
+INSERT INTO `remedio` (`Id_Rem`, `Nome_Rem`, `Categoria_Num`, `Preço`, `Estoque`, `Descrição`) VALUES
+(1, 'Loratamed', 2, 10, 12, 'Rinite');
+
+--
 -- Índices para tabelas despejadas
 --
 
@@ -134,7 +150,7 @@ ALTER TABLE `categoria`
 -- Índices para tabela `cliente`
 --
 ALTER TABLE `cliente`
-  ADD PRIMARY KEY (`Id _Cliente`);
+  ADD PRIMARY KEY (`Id_Cliente`);
 
 --
 -- Índices para tabela `funcionário`
@@ -168,13 +184,13 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `Id _Cliente` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Cliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `funcionário`
 --
 ALTER TABLE `funcionário`
-  MODIFY `ID_Func` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `ID_Func` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de tabela `nível-restrição`
@@ -186,7 +202,7 @@ ALTER TABLE `nível-restrição`
 -- AUTO_INCREMENT de tabela `remedio`
 --
 ALTER TABLE `remedio`
-  MODIFY `Id_Rem` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Id_Rem` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
