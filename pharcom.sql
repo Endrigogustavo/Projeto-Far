@@ -27,6 +27,10 @@ SET time_zone = "+00:00";
 -- Estrutura da tabela `categoria`
 --
 
+CREATE DATABASE `pharcom`;
+
+USE `pharcom`;
+
 CREATE TABLE `categoria` (
   `Id _Categoria` int(11) NOT NULL,
   `Descrição` varchar(300) NOT NULL

@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Categoria extends JFrame {
     Conexao con_cliente;
-    JLabel rCodigo, rNome,rCategoria,rPreco,rEstoque,rPesquisar;
+    JLabel rCodigo, rNome,rCategoria,rPreco,rEstoque,rPesquisar,rDes;
     JTextField tCodigo, tNome,tCategoria,tPreco,tEstoque, tPesquisar,tDes;
     JButton primeiro, anterior, proximo, ultimo, registro, gravar, alterar, excluir,pesquisar,sair;
     
@@ -39,7 +39,8 @@ public class Categoria extends JFrame {
         rCategoria = new JLabel("Categoria");
         rPreco = new JLabel("Preço");
         rEstoque = new JLabel("Estoque");
-        rPesquisar = new JLabel("Descrição");
+        rPesquisar = new JLabel("Pesquisar");
+        rDes = new JLabel("Descrição");
         tCodigo = new JTextField();
         tNome = new JTextField();
         tCategoria= new JTextField();
@@ -138,6 +139,7 @@ public class Categoria extends JFrame {
                 tCategoria.setText("");
                 tNome.setText("");
                 tPreco.setText("");
+                tDes.setText("");
             }
         });
         
@@ -177,13 +179,13 @@ public class Categoria extends JFrame {
                        msg="Gravado com sucesso";
                     }
                     else{
-                        sql = "update remedio set Nome_Rem='"+nome+"',Categoria_Num='"+email+"',Preço='"+tel+"',Estoque='"+dt+"',Descrição='"+des+"'where cod="+tCodigo.getText();
+                        sql = "update remedio set Nome_Rem='"+nome+"',Categoria_Num='"+email+"',Preço='"+tel+"',Estoque='"+dt+"',Descrição='"+des+"'where Id_Rem="+tCodigo.getText();
                         msg="Alterado com sucesso";
                     }
                     
                     con_cliente.statement.executeUpdate(sql);
                     JOptionPane.showMessageDialog(null, "Gravado com sucesso");
-                    con_cliente.executaSQL("select * from remedio order by Nome_Rem");
+                    con_cliente.executaSQL("select * from remedio order by Id_Rem ");
                     preencherTabela();
                     
                 } catch (SQLException errosql) {
@@ -200,11 +202,11 @@ public class Categoria extends JFrame {
                 try {
                     int resposta = JOptionPane.showConfirmDialog(rootPane, "Deseja excluir?");
                     if (resposta==0) {
-                      sql = "delete from tbclientes where cod = " +tCodigo.getText();
+                      sql = "delete from remedio where Id_Rem = " +tCodigo.getText();
                       int excluir = con_cliente.statement.executeUpdate(sql);                   
                     if(excluir==1){
                         JOptionPane.showMessageDialog(null, "Excluido com sucesso");
-                        con_cliente.executaSQL("select * from tbclientes order by cod");
+                        con_cliente.executaSQL("select * from remedio order by Id_Rem");
                         con_cliente.resultset.first();
                         preencherTabela();
                         //posicionarRegistro();
@@ -225,7 +227,7 @@ public class Categoria extends JFrame {
            pesquisar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
-                    String pesquisa = "select * from tbclientes where nome like'"+tPesquisar.getText()+"%'";
+                    String pesquisa = "select * from remedio where Nome_Rem like'"+tPesquisar.getText()+"%'";
                     con_cliente.executaSQL(pesquisa);
                     if(con_cliente.resultset.first()){
                     preencherTabela();
@@ -240,34 +242,34 @@ public class Categoria extends JFrame {
         });
                 
      
-                primeiro.setBounds(60, 260,100, 30);
+                primeiro.setBounds(60, 320,100, 30);
                 tela.add(primeiro);
-                anterior.setBounds(150, 260,100, 30);
+                anterior.setBounds(150, 320,100, 30);
                 tela.add(anterior);
-                proximo.setBounds(240, 260,100, 30);
+                proximo.setBounds(240, 320,100, 30);
                 tela.add(proximo);
-                ultimo.setBounds(330, 260,100, 30);
+                ultimo.setBounds(330, 320,100, 30);
                 tela.add(ultimo);
                 
                 
-                registro.setBounds(500, 260,130, 30);
+                registro.setBounds(500, 320,130, 30);
                 tela.add(registro);
-                gravar.setBounds(635, 260,100, 30);
+                gravar.setBounds(635, 320,100, 30);
                 tela.add(gravar);
-                alterar.setBounds(730, 260,100, 30);
+                alterar.setBounds(730, 320,100, 30);
                 tela.add(alterar);
-                excluir.setBounds(830, 260,100, 30);
+                excluir.setBounds(830, 320,100, 30);
                 tela.add(excluir);
                 
-                pesquisar.setBounds(450, 335,150, 22);
+                pesquisar.setBounds(60, 355,150, 30);
                 tela.add(pesquisar);
                 
-                sair.setBounds(750, 335,150, 30);
+                sair.setBounds(750, 355,150, 30);
                 tela.add(sair);
                 
                
         rPesquisar.setBounds(50, 320, 200, 50);
-        tPesquisar.setBounds(190, 335, 250, 20);
+        tPesquisar.setBounds(220, 355, 250, 30);
         
 
                 
@@ -315,6 +317,7 @@ public class Categoria extends JFrame {
         rCategoria.setBounds(50, 120, 150, 50);
         rPreco.setBounds(50, 160, 150, 50);
         rEstoque.setBounds(50, 200, 150, 50);
+        rDes.setBounds(50, 250, 150, 50);
         
         rCodigo.setForeground(Color.white);
         rNome.setForeground(Color.white);
@@ -322,6 +325,7 @@ public class Categoria extends JFrame {
         rPreco.setForeground(Color.white);
         rEstoque.setForeground(Color.white);
         rPesquisar.setForeground(Color.white);
+        rDes.setForeground(Color.white);
         
         rCodigo.setFont(new Font("Tahoma",Font.BOLD,15));
         rNome.setFont(new Font("Tahoma",Font.BOLD,15));
@@ -329,15 +333,14 @@ public class Categoria extends JFrame {
         rPreco.setFont(new Font("Tahoma",Font.BOLD,15));
         rEstoque.setFont(new Font("Tahoma",Font.BOLD,15));
         rPesquisar.setFont(new Font("Tahoma",Font.BOLD,15));
-        
+        rDes.setFont(new Font("Tahoma",Font.BOLD,15));
         
         tCodigo.setBounds(130, 50, 80, 30);
         tNome.setBounds(130, 90, 220, 30);
-        tCategoria.setBounds(130, 130, 220, 30);
-        tPreco.setBounds(130, 170, 220, 30);
-        tEstoque.setBounds(130, 210, 220, 30);
-        tPesquisar.setBounds(130, 135, 220, 30);
-        tDes.setBounds(130, 235, 220, 30);
+        tCategoria.setBounds(130, 130, 200, 30);
+        tPreco.setBounds(130, 170, 100, 30);
+        tEstoque.setBounds(130, 210, 80, 30);
+        tDes.setBounds(130, 250, 250, 60);
         
         
         tela.add(tCategoria);
@@ -351,7 +354,8 @@ public class Categoria extends JFrame {
         tela.add(rPreco);
         tela.add(rEstoque);
         tela.add(tDes);
-        
+        tela.add(rDes);
+        tela.add(tPesquisar);
                 
         setSize(1000,650);
         setVisible(true);
