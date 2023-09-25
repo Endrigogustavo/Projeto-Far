@@ -20,7 +20,7 @@ import javax.swing.*;
 public class MenuAdm extends JFrame {
     Conexao con_cliente;
    
-    JButton sair,sair1,sair2;
+    JButton funcionariolink,remediolink,clientelink;
     public MenuAdm() throws SQLException, ParseException{
 
         Container tela = getContentPane();
@@ -32,11 +32,11 @@ public class MenuAdm extends JFrame {
         setTitle("Conexao Java com Mysql");
         setResizable(false);
         tela.setLayout(null);
-        sair = new JButton ("Funcionarios");
-        sair1 = new JButton ("Categorias");
-        sair2 = new JButton ("Cliente");
+        funcionariolink = new JButton ("Funcionarios");
+        remediolink = new JButton ("Remédios");
+        clientelink = new JButton ("Cliente");
  
-        sair.addActionListener(new ActionListener(){
+        funcionariolink.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
                     Funcionarios fun = new Funcionarios();
@@ -51,10 +51,10 @@ public class MenuAdm extends JFrame {
             }
         });
         
-        sair1.addActionListener(new ActionListener(){
+        remediolink.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
-                    Categoria fun = new Categoria();
+                    Remedio fun = new Remedio();
                     fun.setVisible(true);
                     dispose();
                 } catch (SQLException ex) {
@@ -67,7 +67,7 @@ public class MenuAdm extends JFrame {
         });
         
         
-                sair2.addActionListener(new ActionListener(){
+                clientelink.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
                     cliente cli = new cliente();
@@ -83,14 +83,14 @@ public class MenuAdm extends JFrame {
         });
               
                 
-                sair.setBounds(750, 335,150, 30);
-                tela.add(sair);
+                funcionariolink.setBounds(750, 335,150, 30);
+                tela.add(funcionariolink);
                 
-                sair1.setBounds(600, 335,150, 30);
-                tela.add(sair1);
+                remediolink.setBounds(600, 335,150, 30);
+                tela.add(remediolink);
                 
-                sair2.setBounds(450, 335,150, 30);
-                tela.add(sair2);
+                clientelink.setBounds(450, 335,150, 30);
+                tela.add(clientelink);
        
         setSize(1000,650);
         setVisible(true);

@@ -19,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Admin
  */
-public class Categoria extends JFrame {
+public class Remedio extends JFrame { 
     Conexao con_cliente;
     JLabel rCodigo, rNome,rCategoria,rPreco,rEstoque,rPesquisar,rDes;
     JTextField tCodigo, tNome,tCategoria,tPreco,tEstoque, tPesquisar,tDes;
@@ -30,7 +30,7 @@ public class Categoria extends JFrame {
     
      
     
-    public Categoria() throws SQLException, ParseException{
+    public Remedio() throws SQLException, ParseException{
 
         Container tela = getContentPane();
         
@@ -55,7 +55,7 @@ public class Categoria extends JFrame {
         con_cliente = new Conexao();
         con_cliente.conecta();
         
-        setTitle("Conexao Java com Mysql");
+        setTitle("Remedio");
         setResizable(false);
         tela.setLayout(null);
         
