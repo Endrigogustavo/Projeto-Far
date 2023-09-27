@@ -83,16 +83,16 @@ public class MenuAdm extends JFrame {
         });
               
                 
-                funcionariolink.setBounds(750, 335,150, 30);
+                funcionariolink.setBounds(170, 95,150, 30);
                 tela.add(funcionariolink);
                 
-                remediolink.setBounds(600, 335,150, 30);
+                remediolink.setBounds(170, 195,150, 30);
                 tela.add(remediolink);
                 
-                clientelink.setBounds(450, 335,150, 30);
+                clientelink.setBounds(170, 305,150, 30);
                 tela.add(clientelink);
        
-        setSize(1000,650);
+        setSize(500, 450);
         setVisible(true);
         setLocationRelativeTo(null);
 
@@ -101,35 +101,35 @@ public class MenuAdm extends JFrame {
     }
     
 public static void main(String args[]) throws SQLException, ParseException{
-    
-try {
-		    for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-		        if ("Nimbus".equals(info.getName())) {
-		            UIManager.setLookAndFeel(info.getClassName());
-		            break;
-		        }
-		    }
-		} catch (UnsupportedLookAndFeelException e) {
 
-		    System.out.println("Erro: " + e.getMessage());
-		    e.printStackTrace();
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (UnsupportedLookAndFeelException e) {
 
-		} catch (ClassNotFoundException e) {
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace();
 
-			System.out.println("Erro: " + e.getMessage());
-		    e.printStackTrace();
+        } catch (ClassNotFoundException e) {
 
-		} catch (InstantiationException e) {
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace();
 
-			System.out.println("Erro: " + e.getMessage());
-		    e.printStackTrace();
+        } catch (InstantiationException e) {
 
-		} catch (IllegalAccessException e) {
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace();
 
-			System.out.println("Erro: " + e.getMessage());
-		    e.printStackTrace();
-		}
- 
-}
+        } catch (IllegalAccessException e) {
+
+            System.out.println("Erro: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
 
 }
